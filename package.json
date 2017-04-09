@@ -1,0 +1,21 @@
+{
+  "name": "snake",
+  "version": "0.0.1",
+  "description": "Snake in Typescript",
+  "main": "src/main.ts",
+  "repository": "git@github.com:mikerob215/snake.git",
+  "author": "mikerobinson <mikerobinson1@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.js"
+  },
+  "dependencies": {
+    "html-webpack-plugin": "^2.28.0",
+    "typescript": "^2.2.2",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.1.2"
+  }
+}
