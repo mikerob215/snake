@@ -4,53 +4,69 @@ import Edge = DomTools.Edge;
 import Space = DomTools.Space;
 import GameElement = DomTools.GameElement;
 import Line = DomTools.Line;
+
 export class GameBoard {
-    private readonly width = 40;
-    private readonly height = 20;
     private board: GameElement[][];
     private snake: Snake;
 
-    constructor(element: HTMLUnknownElement) {
-        this.buildBoard(element)
+    constructor(private element: HTMLUnknownElement) {
+        this.buildBoard()
     }
 
-    buildBoard(element) {
+    buildBoard() {
         this.board = [
             new Line().top(),
             ...new Line().fillMiddle(),
             new Line().top()
         ];
-        this.addBoardToDom(element);
+        this.addBoardToDom();
+        this.insertSnake();
+        this.launchController();
+        this.startTimer();
+        document.addEventListener('lost', event => {
+            window.location.reload(true);
+        })
+    }
 
+    private insertSnake() {
         this.snake = new Snake(this.board);
+        this.addBoardToDom();
+    }
 
-        window.addEventListener('keydown', event => {
-            if (event.key === 'ArrowRight') {
-                this.snake.move('right');
+    private launchController() {
+        document.addEventListener("keydown", event => {
+            if (event.key === "ArrowRight") {
+                this.snake.move("right");
             }
 
-            if (event.key === 'ArrowLeft') {
-                this.snake.move('left');
+            if (event.key === "ArrowLeft") {
+                this.snake.move("left");
             }
 
-            if (event.key === 'ArrowDown') {
-                this.snake.move('down');
+            if (event.key === "ArrowDown") {
+                this.snake.move("down");
             }
 
-            if (event.key === 'ArrowUp') {
-                this.snake.move('up');
+            if (event.key === "ArrowUp") {
+                this.snake.move("up");
             }
-            element.innerHTML = '';
-
-            this.addBoardToDom(element);
+            this.addBoardToDom();
         });
     }
 
-    private addBoardToDom(element) {
+    private addBoardToDom() {
+        this.element.innerHTML = '';
         this.board.forEach(line => {
             line.forEach(part => {
-                element.appendChild(part)
+                this.element.appendChild(part as HTMLUnknownElement);
             });
         });
+    }
+
+    private startTimer() {
+        setInterval(() => {
+            this.snake.moveLastDirection();
+            this.addBoardToDom();
+        }, 700)
     }
 }
