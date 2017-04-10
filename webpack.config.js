@@ -15,6 +15,16 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        modules: [
+            "node_modules",
+            path.resolve(__dirname, "src")
+        ],
+        extensions: [
+            ".ts",
+            ".js"
+        ]
+    },
     plugins: [
         new WebpackHTMLplugin()
     ]
